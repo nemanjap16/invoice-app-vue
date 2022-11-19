@@ -1,7 +1,12 @@
-<script setup></script>
+<script setup>
+import TheNavbar from '../components/TheNavbar.vue';
+
+</script>
 
 <template>
+  <header>
+    <TheNavbar />
+  </header>
   <main>
-    <h1>test</h1>
   </main>
 </template>

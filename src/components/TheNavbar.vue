@@ -1,21 +1,63 @@
 <template>
-  <div class="nav w-max h-screen bg-nav-light overflow-hidden flex flex-col justify-between">
-    <div class="box-1 w-[103px] h-[103px] bg-purple-dark flex items-center justify-center">
-      <img class="logo z-10" src="/icons/logo.svg" alt="logo" width="45">
+  <div class="nav w-max h-screen bg-nav-base dark:bg-nav-dark overflow-hidden flex flex-col justify-between">
+    <div class="box-1 w-[103px] h-[103px] bg-purple-base flex items-center justify-center">
+      <img class="logo z-10" src="../assets/icons/logo.svg" alt="logo" width="45">
     </div>
     <div class="user flex flex-col items-center">
       <button class="theme-btn h-[103px]" aria-label="Theme switch">
-        <TheMoon class="text-moon-color hover:text-moon-hover" />
+        <IconMoon v-if="moon" id="moon" class="text-moon-color hover:text-moon-hover" @click="toggleTheme" />
+        <IconSun v-else id="sun" class="text-moon-color hover:text-moon-hover" ref="sunIcon" @click="toggleTheme" />
       </button>
       <figure class="avatar h-[103px] border-t-[1px] border-solid border-slate-500 w-full grid place-content-center">
-        <img class="rounded-full" src="/images/image-avatar.jpg" alt="avatar" width="46">
+        <img class="rounded-full" src="../assets/images/image-avatar.jpg" alt="avatar" width="46">
       </figure>
     </div>
   </div>
 </template>
 
 <script setup>
-import TheMoon from './TheMoon.vue';
+import { ref } from 'vue';
+import IconMoon from './icons/IconMoon.vue';
+import IconSun from './icons/IconSun.vue';
+import { themeCheck, themeSwitch } from "../themeSwitch"
+
+let theme = localStorage.getItem("theme");
+
+const moon = ref(false)
+const sun = ref(false)
+
+if (theme === null) {
+  sun.value = false
+  moon.value = true
+}
+
+if (theme === "dark") {
+  sun.value = true
+  moon.value = false
+}
+
+if (theme === "light") {
+  sun.value = false
+  moon.value = true
+}
+
+
+const toggleTheme = (event) => {
+  if (event.currentTarget.id === "moon") {
+    moon.value = false
+    sun.value = true
+    themeSwitch()
+    return
+  }
+  if (event.currentTarget.id === "sun") {
+    sun.value = false
+    moon.value = true
+    themeSwitch()
+    return
+  }
+}
+// check theme on initial load
+themeCheck()
 
 </script>
 

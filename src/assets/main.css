@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply bg-body-color;
+    @apply bg-body-color dark:bg-body-color-dark min-h-screen overflow-x-hidden;
   }
 }

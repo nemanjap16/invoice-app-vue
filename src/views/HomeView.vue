@@ -1,12 +1,15 @@
 <script setup>
-import TheNavbar from '../components/TheNavbar.vue';
-
+import TheInvoices from "../components/TheInvoices.vue";
+import TheNavbar from "../components/TheNavbar.vue";
 </script>
 
 <template>
-  <header>
-    <TheNavbar />
-  </header>
-  <main>
-  </main>
+  <div class="flex h-screen">
+    <header>
+      <TheNavbar />
+    </header>
+    <main class="flex-1">
+      <TheInvoices />
+    </main>
+  </div>
 </template>

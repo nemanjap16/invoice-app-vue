@@ -6,6 +6,5 @@ const invoices = useInvoiceStore();
 </script>
 
 <template>
-
   <RouterView />
 </template>

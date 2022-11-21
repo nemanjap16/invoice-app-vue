@@ -3,7 +3,46 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --paid: 160 67% 52%;
+    --pending: 34 100% 50%;
+    --draft: 231 37% 63%;
+    --draft-dark: 231, 37%, 63%;
+    --draft-light: 228, 29%, 7%;
+  }
   body {
-    @apply bg-body-color dark:bg-body-color-dark min-h-screen overflow-x-hidden;
+    @apply min-h-screen overflow-x-hidden bg-body-color dark:bg-body-color-dark;
+  }
+}
+
+@layer utilities {
+  .green-text {
+    @apply text-paid-text;
+  }
+  .orange-text {
+    @apply text-pending-text;
+  }
+  .gray-text {
+    @apply text-draft-text dark:text-draft-dark;
+  }
+
+  .paid-bg {
+    @apply bg-paid-bg;
+  }
+  .pending-bg {
+    @apply bg-pending-bg;
+  }
+  .draft-bg {
+    @apply bg-draft-bg;
+  }
+
+  .dot-paid {
+    @apply bg-paid-text;
+  }
+  .dot-pending {
+    @apply bg-pending-text;
+  }
+  .dot-draft {
+    @apply bg-draft-text dark:bg-draft-dark;
   }
 }

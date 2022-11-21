@@ -6,7 +6,6 @@ import router from "./router";
 // css
 import "./assets/main.css";
 // js
-// import "./themeSwitch";
 
 const app = createApp(App);
 

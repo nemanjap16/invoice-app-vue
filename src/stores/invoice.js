@@ -4,6 +4,7 @@ export const useInvoiceStore = defineStore("invoice", {
   state: () => ({
     invoices: [],
     formOpen: false,
+    filterOpen: false,
     isLoading: false,
   }),
   getters: {
@@ -18,6 +19,9 @@ export const useInvoiceStore = defineStore("invoice", {
   actions: {
     toggleForm() {
       this.formOpen = !this.formOpen;
+    },
+    toggleFilter() {
+      this.filterOpen = !this.filterOpen;
     },
   },
 });

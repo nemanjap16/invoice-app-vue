@@ -11,7 +11,7 @@
     --draft-light: 228, 29%, 7%;
   }
   body {
-    @apply min-h-screen overflow-x-hidden bg-body-color dark:bg-body-color-dark;
+    @apply min-h-screen overflow-x-hidden bg-body-color font-spartan dark:bg-body-color-dark;
   }
 }
 
@@ -44,5 +44,8 @@
   }
   .dot-draft {
     @apply bg-draft-text dark:bg-draft-dark;
+  }
+  .calc-height {
+    height: calc(100vh - 210px);
   }
 }

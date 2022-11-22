@@ -3,6 +3,12 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
+    container: {
+      center: true,
+    },
+    fontFamily: {
+      spartan: ["Spartan", "Segoe UI Semibold", "sans-serif"],
+    },
     extend: {
       colors: {
         "body-color": "#F2F2F2",

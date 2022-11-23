@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 export const useInvoiceStore = defineStore("invoice", {
   state: () => ({
     invoices: [],
+    filteredInvoices: [],
     formOpen: false,
     filterOpen: false,
     isLoading: false,
@@ -15,6 +16,9 @@ export const useInvoiceStore = defineStore("invoice", {
       this.invoices = data;
       this.isLoading = false;
     },
+    async getFilteredInvoices() {
+      this.filteredInvoices = this.invoices;
+    },
   },
   actions: {
     toggleForm() {
@@ -22,6 +26,17 @@ export const useInvoiceStore = defineStore("invoice", {
     },
     toggleFilter() {
       this.filterOpen = !this.filterOpen;
+    },
+    // set filter
+    setFilter(checkedCheckboxes) {
+      let state = this.invoices.filter((invoice) =>
+        checkedCheckboxes.includes(invoice.status)
+      );
+      this.filteredInvoices = [...state];
+    },
+    // set initial state
+    setFilteredInvoices() {
+      this.filteredInvoices = this.invoices;
     },
   },
 });

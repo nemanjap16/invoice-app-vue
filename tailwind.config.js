@@ -1,3 +1,4 @@
+const plugin = require("tailwindcss/plugin");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
@@ -49,5 +50,38 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addBase, addComponents, addUtilities, theme }) {
+      addBase({});
+      addComponents({
+        ".custom-checkbox": {
+          position: "relative",
+          appearance: "none",
+          backgroundColor: "#DFE3FA",
+          width: "16px",
+          height: "16px",
+          border: "1px solid transparent",
+          borderRadius: "2px",
+          "&:hover": {
+            border: "1px solid #7C5DFA",
+          },
+          "&:checked": {
+            backgroundColor: "#7C5DFA",
+          },
+          "&::after": {
+            content: `url('./src/assets/icons/icon-check.svg')`,
+            display: "block",
+            position: "absolute",
+            top: "-3px",
+            left: "2px",
+            opacity: "0",
+          },
+          "&:checked::after": {
+            opacity: " 1",
+          },
+        },
+      });
+      addUtilities({});
+    }),
+  ],
 };

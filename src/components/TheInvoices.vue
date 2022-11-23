@@ -18,7 +18,58 @@
           {{ store.invoices.length }} invoices
         </p>
       </div>
-      <div class="flex items-center gap-4 md:gap-16">
+      <div class="relative flex items-center gap-4 md:gap-16">
+        <!-- filter card -->
+        <div
+          v-if="store.filterOpen"
+          class="absolute top-20 right-0 flex w-[250px] flex-col gap-4 rounded-lg bg-white py-8 px-8 shadow-2xl dark:bg-nav-dark lg:left-0"
+        >
+          <label
+            for="paid"
+            class="flex w-max cursor-pointer items-center gap-3 text-sm font-bold dark:text-white"
+            aria-label="Check paid invoices"
+            @click="handleCheckbox"
+          >
+            <input
+              class="checkbox custom-checkbox dark:bg-body-color-dark dark:checked:bg-purple-base"
+              type="checkbox"
+              name="paid"
+              id="paid"
+              value="paid"
+            />
+            Paid
+          </label>
+          <label
+            for="pending"
+            class="flex w-max cursor-pointer items-center gap-3 text-sm font-bold dark:text-white"
+            aria-label="Check pending invoices"
+            @click="handleCheckbox"
+          >
+            <input
+              class="checkbox custom-checkbox dark:bg-body-color-dark dark:checked:bg-purple-base"
+              type="checkbox"
+              name="pending"
+              id="pending"
+              value="pending"
+            />
+            Pending
+          </label>
+          <label
+            for="draft"
+            class="flex w-max cursor-pointer items-center gap-3 text-sm font-bold dark:text-white"
+            aria-label="Check draft invoices"
+            @click="handleCheckbox"
+          >
+            <input
+              class="checkbox custom-checkbox dark:bg-body-color-dark dark:checked:bg-purple-base"
+              type="checkbox"
+              name="draft"
+              id="draft"
+              value="draft"
+            />
+            Draft
+          </label>
+        </div>
         <button
           class="flex items-center gap-2 md:gap-4"
           aria-label="Filter invoices"
@@ -47,7 +98,10 @@
         </button>
       </div>
     </div>
-    <div v-for="invoice in store.invoices" v-if="store.invoices.length > 0">
+    <div
+      v-for="invoice in store.filteredInvoices"
+      v-if="store.invoices.length > 0"
+    >
       <InvoiceData :invoice="invoice" :key="invoice.id" />
     </div>
     <div
@@ -78,9 +132,8 @@ import IconEmpty from "./icons/IconEmpty.vue";
 import IconPlus from "./icons/IconPlus.vue";
 import InvoiceData from "./InvoiceData.vue";
 
-const store = useInvoiceStore();
+let store = useInvoiceStore();
 const arrow = ref();
-console.log(store.filterOpen);
 
 const filter = (e) => {
   if (store.filterOpen) {
@@ -89,6 +142,16 @@ const filter = (e) => {
   } else {
     e.currentTarget.children[2].style = "transform: rotate(180deg)";
     store.toggleFilter();
+  }
+};
+
+const handleCheckbox = () => {
+  let checked = document.querySelectorAll(".checkbox:checked");
+  let checkedCheckboxes = Array.from(checked).map((checkbox) => checkbox.value);
+  if (checkedCheckboxes.length > 0) {
+    store.setFilter(checkedCheckboxes);
+  } else {
+    store.setFilteredInvoices();
   }
 };
 </script>

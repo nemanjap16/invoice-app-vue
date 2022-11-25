@@ -15,6 +15,24 @@
   }
 }
 
+@layer components {
+  .btn {
+    @apply rounded-full px-[24px] py-[17px] font-semibold;
+  }
+  .btn-status {
+    @apply;
+  }
+  .edit {
+    @apply bg-[#f9fafe] text-[#7e88c3] dark:bg-opacity-5 dark:text-[#DFE3FA];
+  }
+  .delete {
+    @apply bg-[#ec5757] text-[#fff];
+  }
+  .paid {
+    @apply bg-[#7c5dfa] text-[#fff];
+  }
+}
+
 @layer utilities {
   .green-text {
     @apply text-paid-text;

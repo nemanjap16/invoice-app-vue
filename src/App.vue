@@ -1,8 +1,8 @@
 <script setup>
 import { RouterView } from "vue-router";
 import { useInvoiceStore } from "./stores/invoice";
-
-const invoices = useInvoiceStore();
+const store = useInvoiceStore();
+store.getInvoices();
 </script>
 
 <template>

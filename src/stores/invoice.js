@@ -4,23 +4,26 @@ export const useInvoiceStore = defineStore("invoice", {
   state: () => ({
     invoices: [],
     filteredInvoices: [],
+    currentInvoice: {},
     formOpen: false,
     filterOpen: false,
     isLoading: false,
   }),
-  getters: {
+  getters: {},
+  actions: {
     async getInvoices() {
       this.isLoading = true;
       const res = await fetch("http://localhost:3000/invoices");
       const data = await res.json();
       this.invoices = data;
       this.isLoading = false;
-    },
-    async getFilteredInvoices() {
       this.filteredInvoices = this.invoices;
     },
-  },
-  actions: {
+    async getInvoice(id) {
+      const res = await fetch(`http://localhost:3000/invoices/${id}`);
+      const data = await res.json();
+      this.currentInvoice = data;
+    },
     toggleForm() {
       this.formOpen = !this.formOpen;
     },

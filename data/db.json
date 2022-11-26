@@ -214,10 +214,10 @@
         "country": "United Kingdom"
       },
       "clientAddress": {
-        "street": "",
-        "city": "",
-        "postCode": "",
-        "country": ""
+        "street": "21 Union Square",
+        "city": "Berlin",
+        "postCode": "A2 2TG",
+        "country": "Germany"
       },
       "items": [
         {

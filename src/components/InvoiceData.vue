@@ -24,15 +24,6 @@
           <p class="text-base font-bold text-title-color dark:text-white">
             {{ number }}
           </p>
-          <!-- <div
-            class="flex w-[110px] items-center justify-center gap-2 rounded-md py-2 px-4"
-            :class="statusColorBg()"
-          >
-            <span class="h-2 w-2 rounded-full" :class="statusColorDot()"></span>
-            <p class="text-sm font-semibold capitalize" :class="statusColor()">
-              {{ invoice.status }}
-            </p>
-          </div> -->
           <StatusBtn :invoice="invoice" />
           <IconArrowRight />
         </div>
@@ -40,7 +31,10 @@
     </div>
   </router-link>
   <!-- mobile -->
-  <router-link :to="{ name: 'invoice', params: { id: invoice.id } }">
+  <router-link
+    :to="{ name: 'invoice', params: { id: invoice.id } }"
+    @click="store.getInvoice(invoice.id)"
+  >
     <div class="container lg:hidden">
       <div
         class="mb-3 flex w-[330px] flex-col gap-5 rounded-md border-2 border-solid border-transparent bg-white p-5 hover:border-purple-light dark:bg-nav-dark"
@@ -63,15 +57,6 @@
               {{ number }}
             </p>
           </div>
-          <!-- <div
-            class="flex w-[106px] items-center justify-center gap-2 rounded-md py-2 px-4"
-            :class="statusColorBg()"
-          >
-            <span class="h-2 w-2 rounded-full" :class="statusColorDot()"></span>
-            <p class="text-xs font-semibold capitalize" :class="statusColor()">
-              {{ invoice.status }}
-            </p>
-          </div> -->
           <StatusBtn :invoice="invoice" />
         </div>
       </div>

@@ -21,6 +21,7 @@ module.exports = {
         "moon-color": "#7E88C3",
         "moon-hover": "#DFE3FA",
         "sun-color": "#858BB2",
+        "light-gray": "#F9FAFE",
 
         paid: {
           bg: "hsl(var(--paid) / 0.15)",

@@ -214,10 +214,10 @@
         "country": "United Kingdom"
       },
       "clientAddress": {
-        "street": "21 Union Square",
-        "city": "Berlin",
-        "postCode": "A2 2TG",
-        "country": "Germany"
+        "street": "Main Street",
+        "city": "Arkham City",
+        "postCode": "54105",
+        "country": "Pandora"
       },
       "items": [
         {

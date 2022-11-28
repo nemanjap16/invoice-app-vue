@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-[104px] flex flex-col items-center md:mt-[72px]">
+  <div class="flex flex-col items-center pt-[104px] md:pt-[72px]">
     <div
       class="mb-[65px] flex w-[330px] items-baseline justify-between md:w-[550px] lg:w-[730px]"
     >
@@ -11,7 +11,7 @@
         </h1>
         <!-- desktop -->
         <p class="hidden text-muted-color dark:text-muted-color-dark md:block">
-          There are {{ store.invoices.length }} invoices
+          There are {{ store.filteredInvoices.length }} invoices
         </p>
         <!-- mobile -->
         <p class="text-muted-color dark:text-muted-color-dark md:hidden">

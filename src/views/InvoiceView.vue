@@ -1,6 +1,5 @@
 <template>
   <!-- desktop view -->
-
   <div class="flex">
     <TheNavbar />
     <div class="hidden w-full md:block">
@@ -29,8 +28,16 @@
           </div>
           <div class="flex gap-2">
             <TheButton name="Edit" btnClass="edit" />
-            <TheButton name="Delete" btnClass="delete" />
-            <TheButton name="Mark as Paid" btnClass="paid" />
+            <TheButton
+              name="Delete"
+              btnClass="delete"
+              @click="store.toggleModal()"
+            />
+            <TheButton
+              name="Mark as Paid"
+              btnClass="paid"
+              @click="store.markAsPaid(store.currentInvoice.id)"
+            />
           </div>
         </div>
         <div
@@ -49,10 +56,10 @@
             <div
               class="mb-[22px] flex flex-col gap-1 text-right text-xs text-moon-color dark:text-white"
             >
-              <p>{{ store.currentInvoice?.senderAddress.street }}</p>
-              <p>{{ store.currentInvoice?.senderAddress.city }}</p>
-              <p>{{ store.currentInvoice?.senderAddress.postCode }}</p>
-              <p>{{ store.currentInvoice?.senderAddress.country }}</p>
+              <p>{{ store.currentInvoice.senderAddress?.street }}</p>
+              <p>{{ store.currentInvoice?.senderAddress?.city }}</p>
+              <p>{{ store.currentInvoice?.senderAddress?.postCode }}</p>
+              <p>{{ store.currentInvoice?.senderAddress?.country }}</p>
             </div>
           </div>
           <div class="flex dark:text-white">
@@ -279,6 +286,7 @@
       <TheButton name="Mark as Paid" btnClass="paid" />
     </div>
   </div>
+  <TheModal v-if="store.modalOpen" :id="store.currentInvoice.id" />
 </template>
 
 <script setup>
@@ -286,6 +294,7 @@ import { useRouter } from "vue-router";
 import ArrowLeft from "../components/icons/ArrowLeft.vue";
 import StatusBtn from "../components/StatusBtn.vue";
 import TheButton from "../components/TheButton.vue";
+import TheModal from "../components/TheModal.vue";
 import TheNavbar from "../components/TheNavbar.vue";
 import { useInvoiceStore } from "../stores/invoice";
 import { formatDate } from "../utilities/FormatDate";

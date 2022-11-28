@@ -9,15 +9,16 @@
     --draft: 231 37% 63%;
     --draft-dark: 231, 37%, 63%;
     --draft-light: 228, 29%, 7%;
+    --modal-bg: #0d0f1780;
   }
   body {
-    @apply min-h-screen overflow-x-hidden bg-body-color font-spartan dark:bg-body-color-dark;
+    @apply relative min-h-screen overflow-x-hidden bg-body-color font-spartan dark:bg-body-color-dark;
   }
 }
 
 @layer components {
   .btn {
-    @apply rounded-full px-[24px] py-[17px] font-semibold;
+    @apply rounded-full px-[24px] py-[17px] font-semibold hover:bg-opacity-80;
   }
   .btn-status {
     @apply;
@@ -30,6 +31,9 @@
   }
   .paid {
     @apply bg-[#7c5dfa] text-[#fff];
+  }
+  .cancel {
+    @apply bg-[#F9FAFE] text-[#7E88C3] hover:bg-slate-200 dark:bg-opacity-5 dark:text-white;
   }
 }
 

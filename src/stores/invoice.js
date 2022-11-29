@@ -76,4 +76,5 @@ export const useInvoiceStore = defineStore("invoice", {
       }
     },
   },
+  persist: true,
 });

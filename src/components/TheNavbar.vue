@@ -88,8 +88,7 @@ themeCheck();
 
 <style scoped>
 .nav {
-  /* border-top-right-radius: 24px; */
-  /* border-bottom-right-radius: 24px; */
+  z-index: 99;
   overflow: hidden;
 }
 @media (max-width: 768px) {

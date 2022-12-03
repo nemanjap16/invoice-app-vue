@@ -1,6 +1,5 @@
 <script setup>
 import TheInvoices from "../components/TheInvoices.vue";
-import TheModal from "../components/TheModal.vue";
 import TheNavbar from "../components/TheNavbar.vue";
 </script>
 

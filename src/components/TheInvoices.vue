@@ -87,6 +87,7 @@
         </button>
         <button
           class="flex items-center gap-2 rounded-[60px] bg-purple-light p-2 text-white"
+          @click="store.toggleForm()"
         >
           <div
             class="grid h-[32px] w-[32px] place-content-center rounded-full bg-white"

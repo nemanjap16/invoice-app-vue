@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn text-xs font-semibold" :class="btnClass">
+    <button type="button" class="btn text-xs font-semibold" :class="btnClass">
       {{ name }}
     </button>
   </div>

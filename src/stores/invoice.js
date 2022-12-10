@@ -5,6 +5,7 @@ export const useInvoiceStore = defineStore("invoice", {
     invoices: [],
     filteredInvoices: [],
     currentInvoice: {},
+    editMode: false,
     formOpen: false,
     modalOpen: false,
     filterOpen: false,
@@ -24,6 +25,43 @@ export const useInvoiceStore = defineStore("invoice", {
       const res = await fetch(`http://localhost:3000/invoices/${id}`);
       const data = await res.json();
       this.currentInvoice = data;
+    },
+    setEditModeTrue() {
+      this.editMode = true;
+    },
+    setEditModeFalse() {
+      this.editMode = false;
+      this.currentInvoice = {
+        id: "",
+        createdAt: "",
+        paymentDue: "",
+        description: "",
+        paymentTerms: 1,
+        clientName: "",
+        clientEmail: "",
+        status: "",
+        senderAddress: {
+          street: "",
+          city: "",
+          postCode: "",
+          country: "",
+        },
+        clientAddress: {
+          street: "",
+          city: "",
+          postCode: "",
+          country: "",
+        },
+        items: [
+          {
+            name: "",
+            quantity: 1,
+            price: 1,
+            total: 1,
+          },
+        ],
+        total: 1,
+      };
     },
     toggleForm() {
       this.formOpen = !this.formOpen;
@@ -49,6 +87,7 @@ export const useInvoiceStore = defineStore("invoice", {
       this.filteredInvoices = this.filteredInvoices.filter(
         (invoice) => invoice.id !== id
       );
+      this.invoices = this.filteredInvoices;
       try {
         const res = await fetch(`http://localhost:3000/invoices/${id}`, {
           method: "DELETE",
@@ -68,6 +107,38 @@ export const useInvoiceStore = defineStore("invoice", {
         const res = await fetch(`http://localhost:3000/invoices/${id}`, {
           method: "PATCH",
           body: JSON.stringify({ status: "paid" }),
+          headers: { "Content-Type": "application/json" },
+        });
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async editInvoice(invoice) {
+      this.invoices[this.invoices.findIndex((inv) => inv.id === invoice.id)] =
+        invoice;
+      this.currentInvoice = invoice;
+      try {
+        const res = await fetch(
+          `http://localhost:3000/invoices/${invoice.id}`,
+          {
+            method: "PATCH",
+            body: JSON.stringify(invoice),
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addNewInvoice(invoice) {
+      this.filteredInvoices.push(invoice);
+      this.invoices = this.filteredInvoices;
+      try {
+        const res = await fetch(`http://localhost:3000/invoices/`, {
+          method: "POST",
+          body: JSON.stringify(invoice),
           headers: { "Content-Type": "application/json" },
         });
         console.log(res);

@@ -35,6 +35,9 @@
   .cancel {
     @apply bg-[#F9FAFE] text-[#7E88C3] hover:bg-slate-200 dark:bg-opacity-5 dark:text-white;
   }
+  .draft {
+    @apply bg-[#373B53] text-[#888EB0] hover:bg-[#0C0E16];
+  }
 }
 
 @layer utilities {

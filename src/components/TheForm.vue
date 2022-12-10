@@ -2,151 +2,199 @@
   <div v-if="store.formOpen" class="absolute inset-0 z-10 bg-[#0d0f1780]">
     <form
       class="flex h-full w-[730px] flex-col gap-[48px] overflow-y-scroll rounded-tr-2xl rounded-br-2xl bg-white p-[56px] pl-[159px]"
-      @submit.prevent="handleForm(invoice)"
+      @submit.prevent
     >
       <div class="">
-        <h1 class="text-2xl font-bold">New Invoice</h1>
+        <h1 v-if="store.editMode" class="text-2xl font-bold">
+          Edit <span class="text-moon-color">#</span>{{ invoice.id }}
+        </h1>
+        <h1 v-else class="text-2xl font-bold">New Invoice</h1>
       </div>
       <!-- Bill From -->
       <div class="flex flex-col gap-[24px]">
         <h3 class="text-sm font-bold text-purple-base">Bill From</h3>
-        <label
-          class="flex flex-col gap-[10px] text-xs text-moon-color"
-          for="address"
-        >
-          Street Address
+        <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div class="flex justify-between">
+            <label class="text-xs" for="address"> Street Address </label>
+            <span class="text-[10px] text-red-500">{{
+              errors.senderAddress
+            }}</span>
+          </div>
           <input
             class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
             type="text"
             name="street"
             id="address"
-            v-model="invoice.senderAddress.street"
+            v-model.trim.trim="invoice.senderAddress.street"
+            @keyup="validate('senderAddress', invoice.senderAddress.street)"
+            @blur="validate('senderAddress', invoice.senderAddress.street)"
           />
-        </label>
+        </div>
         <div class="grid grid-cols-3 gap-[10px]">
-          <label
-            class="flex flex-col gap-[10px] text-xs text-moon-color"
-            for="city"
-          >
-            City
+          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+            <div class="flex justify-between">
+              <label class="text-xs" for="city"> City </label>
+              <span class="text-[10px] text-red-500">{{
+                errors.senderCity
+              }}</span>
+            </div>
             <input
               class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
               type="text"
               name="city"
               id="city"
-              v-model="invoice.senderAddress.city"
+              v-model.trim="invoice.senderAddress.city"
+              @keyup="validate('senderCity', invoice.senderAddress.city)"
+              @blur="validate('senderCity', invoice.senderAddress.city)"
             />
-          </label>
-          <label
-            class="flex flex-col gap-[10px] text-xs text-moon-color"
-            for="postCode"
-          >
-            Post Code
+          </div>
+          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+            <div class="flex justify-between">
+              <label class="text-xs" for="postCode"> Post Code </label>
+              <span class="text-[10px] text-red-500">{{
+                errors.senderPostCode
+              }}</span>
+            </div>
             <input
               class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
               type="text"
               name="postCode"
               id="postCode"
-              v-model="invoice.senderAddress.postCode"
+              v-model.trim="invoice.senderAddress.postCode"
+              @keyup="
+                validate('senderPostCode', invoice.senderAddress.postCode)
+              "
+              @blur="validate('senderPostCode', invoice.senderAddress.postCode)"
             />
-          </label>
-          <label
-            class="flex flex-col gap-[10px] text-xs text-moon-color"
-            for="country"
-          >
-            Country
+          </div>
+          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+            <div class="flex justify-between">
+              <label class="text-xs" for="country"> Country </label>
+              <span class="text-[10px] text-red-500">{{
+                errors.senderCountry
+              }}</span>
+            </div>
             <input
               class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
               type="text"
               name="country"
               id="country"
-              v-model="invoice.senderAddress.country"
+              v-model.trim="invoice.senderAddress.country"
+              @keyup="validate('senderCountry', invoice.senderAddress.country)"
+              @blur="validate('senderCountry', invoice.senderAddress.country)"
             />
-          </label>
+          </div>
         </div>
       </div>
       <!-- Bill To -->
       <div class="flex flex-col gap-[24px]">
         <h3 class="text-sm font-bold text-purple-base">Bill To</h3>
-        <label
-          class="flex flex-col gap-[10px] text-xs text-moon-color"
-          for="clientName"
-        >
-          Client's Name
+        <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div class="flex justify-between">
+            <label class="text-xs" for="clientName"> Client's Name </label>
+            <span class="text-[10px] text-red-500">{{
+              errors.clientName
+            }}</span>
+          </div>
           <input
             class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
             type="text"
             name="clientName"
             id="clientName"
-            v-model="invoice.clientName"
+            v-model.trim="invoice.clientName"
+            @keyup="validate('clientName', invoice.clientName)"
+            @blur="validate('clientName', invoice.clientName)"
           />
-        </label>
-        <label
-          class="flex flex-col gap-[10px] text-xs text-moon-color"
-          for="clientEmail"
-        >
-          Client's Email
+        </div>
+        <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div class="flex justify-between">
+            <label class="text-xs" for="clientEmail"> Client's Email </label>
+            <span class="text-[10px] text-red-500">{{
+              errors.clientEmail
+            }}</span>
+          </div>
           <input
             class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
             type="text"
             name="clientEmail"
             id="clientEmail"
-            v-model="invoice.clientEmail"
+            v-model.trim="invoice.clientEmail"
+            @keyup="validate('clientEmail', invoice.clientEmail)"
+            @blur="validate('clientEmail', invoice.clientEmail)"
           />
-        </label>
-        <label
-          class="flex flex-col gap-[10px] text-xs text-moon-color"
-          for="clientEmail"
-        >
-          Street Address
+        </div>
+        <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div class="flex justify-between">
+            <label class="text-xs" for="clientEmail"> Street Address </label>
+            <span class="text-[10px] text-red-500">{{
+              errors.clientAddress
+            }}</span>
+          </div>
           <input
             class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
             type="text"
             name="clientAddress"
             id="clientAddress"
-            v-model="invoice.clientAddress.street"
+            v-model.trim="invoice.clientAddress.street"
+            @keyup="validate('clientAddress', invoice.clientAddress.street)"
+            @blur="validate('clientAddress', invoice.clientAddress.street)"
           />
-        </label>
+        </div>
         <div class="grid grid-cols-3 gap-[10px]">
-          <label
-            class="flex flex-col gap-[10px] text-xs text-moon-color"
-            for="clientCity"
-          >
-            City
+          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+            <div class="flex justify-between">
+              <label class="text-xs" for="clientCity"> City </label>
+              <span class="text-[10px] text-red-500">{{
+                errors.clientCity
+              }}</span>
+            </div>
             <input
               class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
               type="text"
               name="clientCity"
               id="clientCity"
-              v-model="invoice.clientAddress.city"
+              v-model.trim="invoice.clientAddress.city"
+              @keyup="validate('clientCity', invoice.clientAddress.city)"
+              @blur="validate('clientCity', invoice.clientAddress.city)"
             />
-          </label>
-          <label
-            class="flex flex-col gap-[10px] text-xs text-moon-color"
-            for="clientPostCode"
-          >
-            Post Code
+          </div>
+          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+            <div class="flex justify-between">
+              <label class="text-xs" for="clientPostCode"> Post Code </label>
+              <span class="text-[10px] text-red-500">{{
+                errors.clientPostCode
+              }}</span>
+            </div>
             <input
               class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
               type="text"
               name="clientPostCode"
               id="clientPostCode"
-              v-model="invoice.clientAddress.postCode"
+              v-model.trim="invoice.clientAddress.postCode"
+              @keyup="
+                validate('clientPostCode', invoice.clientAddress.postCode)
+              "
+              @blur="validate('clientPostCode', invoice.clientAddress.postCode)"
             />
-          </label>
-          <label
-            class="flex flex-col gap-[10px] text-xs text-moon-color"
-            for="clientCountry"
-          >
-            Country
+          </div>
+          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+            <div class="flex justify-between">
+              <label class="text-xs" for="clientCountry"> Country </label>
+
+              <span class="text-[10px] text-red-500">{{
+                errors.clientCountry
+              }}</span>
+            </div>
             <input
               class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
               type="text"
               name="clientCountry"
               id="clientCountry"
-              v-model="invoice.clientAddress.country"
+              v-model.trim="invoice.clientAddress.country"
+              @keyup="validate('clientCountry', invoice.clientAddress.country)"
+              @blur="validate('clientCountry', invoice.clientAddress.country)"
             />
-          </label>
+          </div>
         </div>
       </div>
       <!-- invoice date -->
@@ -161,6 +209,7 @@
             type="date"
             name="invoiceDate"
             id="invoiceDate"
+            placeholder="dd/mm/yyyy"
             v-model="invoice.createdAt"
           />
         </label>
@@ -173,7 +222,7 @@
             class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
             name="paymentTerms"
             id="paymentTerms"
-            v-model="invoice.paymentTerms"
+            v-model.trim="invoice.paymentTerms"
           >
             <optgroup>
               <option value="1">Net 1 Day</option>
@@ -192,19 +241,23 @@
             class="mb-[24px] grid w-full grid-cols-[200px_50px_90px_90px_30px] gap-[10px]"
             :key="i"
           >
-            <label
-              class="flex flex-col gap-[10px] text-xs text-moon-color"
-              for="itemName"
-            >
-              Item Name
+            <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+              <div class="flex justify-between">
+                <label class="text-xs" for="itemName"> Item Name </label>
+                <span class="text-[10px] text-red-500">{{
+                  errors[`itemName${i}`]
+                }}</span>
+              </div>
               <input
                 class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
                 type="text"
                 name="itemName"
                 id="itemName"
-                v-model="invoice.items[i].name"
+                v-model.trim="invoice.items[i].name"
+                @keyup="validate(`itemName${i}`, invoice.items[i].name)"
+                @blur="validate(`itemName${i}`, invoice.items[i].name)"
               />
-            </label>
+            </div>
             <label
               class="flex flex-col gap-[10px] text-xs text-moon-color"
               for="ItemQty"
@@ -218,7 +271,7 @@
                 type="number"
                 name="itemQty"
                 id="itemQty"
-                v-model.number="invoice.items[i].quantity"
+                v-model.trim.number="invoice.items[i].quantity"
               />
             </label>
             <label
@@ -234,7 +287,7 @@
                 type="number"
                 name="itemPrice"
                 id="itemPrice"
-                v-model.number="invoice.items[i].price"
+                v-model.trim.number="invoice.items[i].price"
               />
             </label>
             <label
@@ -272,13 +325,39 @@
           + Add New Item
         </button>
       </div>
-      <div class="flex h-[100px] w-full justify-end gap-6">
-        <TheButton
-          name="Cancel"
-          btnClass="cancel"
-          @click="store.toggleForm()"
-        />
-        <TheButton name="Save Changes" btnClass="paid" />
+      <div>
+        <div
+          v-if="store.editMode"
+          class="flex h-[100px] w-full justify-end gap-6"
+        >
+          <TheButton
+            name="Cancel"
+            btnClass="cancel"
+            @click="store.toggleForm()"
+          />
+          <TheButton
+            name="Save Changes"
+            btnClass="paid"
+            @click="handleForm(invoice)"
+          />
+        </div>
+        <div v-else class="flex items-center justify-between">
+          <div>
+            <TheButton
+              name="Discard"
+              btnClass="cancel"
+              @click="store.toggleForm()"
+            />
+          </div>
+          <div class="flex items-center gap-6">
+            <TheButton name="Save as Draft" btnClass="draft" />
+            <TheButton
+              name="Save & Send"
+              btnClass="paid"
+              @click="addNewInvoice(invoice)"
+            />
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -289,17 +368,123 @@ import { reactive } from "vue";
 import { useInvoiceStore } from "../stores/invoice";
 import TheButton from "./TheButton.vue";
 import IconDelete from "./icons/IconDelete.vue";
+import { v4 as uuidv4 } from "uuid";
+import useFormValidation from "@/modules/useFormValidation.js";
 
 const store = useInvoiceStore();
 
+const invoice = reactive({
+  id: store.currentInvoice.id || uuidv4(),
+  createdAt:
+    store.currentInvoice.createdAt || new Date().toISOString().split("T")[0],
+  paymentDue: store.currentInvoice.paymentDue,
+  description: store.currentInvoice.description,
+  paymentTerms: store.currentInvoice.paymentTerms,
+  clientName: store.currentInvoice.clientName,
+  clientEmail: store.currentInvoice.clientEmail,
+  status: store.currentInvoice.status || "pending",
+  senderAddress: {
+    street: store.currentInvoice.senderAddress.street || "19 Union Terrace",
+    city: store.currentInvoice.senderAddress.city || "London",
+    postCode: store.currentInvoice.senderAddress.postCode || "E1 3EZ",
+    country: store.currentInvoice.senderAddress.country || "United Kingdom",
+  },
+  clientAddress: {
+    street: store.currentInvoice.clientAddress.street,
+    city: store.currentInvoice.clientAddress.city,
+    postCode: store.currentInvoice.clientAddress.postCode,
+    country: store.currentInvoice.clientAddress.country,
+  },
+  items: store.currentInvoice.items,
+  total: store.currentInvoice.total,
+});
+
+// form field validation
+const { validateEmptyField, errors } = useFormValidation();
+const validate = (fieldName, fieldValue) => {
+  return validateEmptyField(fieldName, fieldValue);
+};
+
+let validForm = false;
+const addNewInvoice = (invoice) => {
+  validForm = true;
+
+  for (const [key, value] of Object.entries(invoice)) {
+    if (value === "") {
+      validate(key, value);
+      validForm = false;
+    }
+    if (key === "description" || key === "paymentDue") {
+      validForm = true;
+    }
+  }
+
+  for (const [key, value] of Object.entries(invoice.senderAddress)) {
+    if (value === "") {
+      if (key === "street") {
+        validate("senderAddress", value);
+      }
+      if (key === "country") {
+        validate("senderCountry", value);
+      }
+      if (key === "city") {
+        validate("senderCity", value);
+      }
+      if (key === "postCode") {
+        validate("senderPostCode", value);
+      }
+      validForm = false;
+    }
+  }
+
+  for (const [key, value] of Object.entries(invoice.clientAddress)) {
+    if (value === "") {
+      if (key === "street") {
+        validate("clientAddress", value);
+      }
+      if (key === "country") {
+        validate("clientCountry", value);
+      }
+      if (key === "city") {
+        validate("clientCity", value);
+      }
+      if (key === "postCode") {
+        validate("clientPostCode", value);
+      }
+      validForm = false;
+    }
+  }
+
+  invoice.items.map((item, i) => {
+    if (item.name === "") {
+      validate(`itemName${i}`, item.name);
+      validForm = false;
+    }
+  });
+
+  if (validForm) {
+    store.addNewInvoice(invoice);
+  }
+};
+
 const handleForm = (invoice) => {
-  console.log(invoice);
+  store.editInvoice(invoice);
 };
 
 const multiple = (a, b, i) => {
   let total = parseFloat(a * b).toFixed(2);
   invoice.items[i].total = Number(total);
+  grandTotal();
   return total;
+};
+
+const grandTotal = () => {
+  let sum = 0;
+  invoice.items.forEach((el) => {
+    sum += el.total;
+  });
+  store.currentInvoice.total = sum;
+  invoice.total = sum;
 };
 
 const parse = (num) => {
@@ -318,44 +503,6 @@ const addItem = () => {
     total: parse(1),
   });
 };
-
-const invoice = reactive({
-  id: "XM9141",
-  createdAt: "2021-08-21",
-  paymentDue: "2021-09-20",
-  description: "Graphic Design",
-  paymentTerms: 30,
-  clientName: "Alex Grim",
-  clientEmail: "alexgrim@mail.com",
-  status: "paid",
-  senderAddress: {
-    street: "19 Union Terrace",
-    city: "London",
-    postCode: "E1 3EZ",
-    country: "United Kingdom",
-  },
-  clientAddress: {
-    street: "84 Church Way",
-    city: "Bradford",
-    postCode: "BD1 9PB",
-    country: "United Kingdom",
-  },
-  items: [
-    {
-      name: "Banner Design",
-      quantity: 1,
-      price: parse(156),
-      total: 156,
-    },
-    {
-      name: "Email Design",
-      quantity: 2,
-      price: parse(200),
-      total: 400,
-    },
-  ],
-  total: 556,
-});
 </script>
 
 <style scoped></style>

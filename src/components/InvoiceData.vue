@@ -4,14 +4,16 @@
     :to="{ name: 'invoice', params: { id: invoice.id } }"
     @click="store.getInvoice(invoice.id)"
   >
-    <div class="hidden lg:block">
+    <div class="hidden shadow-md lg:block">
       <div
         class="mb-3 flex w-[730px] items-center justify-between rounded-md border-2 border-solid border-transparent bg-white p-4 hover:border-purple-light dark:bg-nav-dark"
       >
         <div class="flex items-center gap-5">
           <div class="flex items-center">
             <span class="text-moon-color">#</span>
-            <p class="font-bold text-title-color dark:text-white">
+            <p
+              class="max-w-[80px] truncate font-bold text-title-color dark:text-white"
+            >
               {{ invoice.id }}
             </p>
           </div>

@@ -87,14 +87,16 @@
         </button>
         <button
           class="flex items-center gap-2 rounded-[60px] bg-purple-light p-2 text-white"
-          @click="store.toggleForm()"
+          @click="store.setEditModeFalse(), store.toggleForm()"
         >
           <div
             class="grid h-[32px] w-[32px] place-content-center rounded-full bg-white"
           >
             <IconPlus class="ml-[1px]" />
           </div>
-          <span class="mr-2 hidden font-semibold md:block">New Invoice</span>
+          <span class="mr-2 hidden text-sm font-semibold md:block"
+            >New Invoice</span
+          >
           <span class="mr-2 font-semibold md:hidden">New</span>
         </button>
       </div>

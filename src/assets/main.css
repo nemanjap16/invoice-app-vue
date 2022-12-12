@@ -41,6 +41,12 @@
 }
 
 @layer utilities {
+  .invalidBorder {
+    @apply border border-red-500 outline-none focus:border-red-500 dark:border-red-500 dark:focus:border-red-500;
+  }
+  .validBorder {
+    @apply border border-transparent border-moon-color outline-none dark:border-transparent;
+  }
   .green-text {
     @apply text-paid-text;
   }

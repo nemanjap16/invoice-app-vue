@@ -1,10 +1,10 @@
 <template>
   <div v-if="store.formOpen" class="absolute inset-0 z-10 bg-[#0d0f1780]">
     <form
-      class="flex h-full w-[730px] flex-col gap-[48px] overflow-y-scroll rounded-tr-2xl rounded-br-2xl bg-white p-[56px] pl-[159px]"
+      class="flex h-full w-[730px] flex-col gap-[48px] overflow-y-scroll rounded-tr-2xl rounded-br-2xl bg-white p-[56px] pl-[159px] dark:bg-[#141625]"
       @submit.prevent
     >
-      <div class="">
+      <div class="dark:text-white">
         <h1 v-if="store.editMode" class="text-2xl font-bold">
           Edit <span class="text-moon-color">#</span>{{ invoice.id }}
         </h1>
@@ -13,7 +13,9 @@
       <!-- Bill From -->
       <div class="flex flex-col gap-[24px]">
         <h3 class="text-sm font-bold text-purple-base">Bill From</h3>
-        <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+        <div
+          class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+        >
           <div class="flex justify-between">
             <label class="text-xs" for="address"> Street Address </label>
             <span class="text-[10px] text-red-500">{{
@@ -21,17 +23,24 @@
             }}</span>
           </div>
           <input
-            class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+            class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+            :class="[errors.senderAddress ? 'invalidBorder' : 'validBorder']"
             type="text"
             name="street"
             id="address"
             v-model.trim.trim="invoice.senderAddress.street"
-            @keyup="validate('senderAddress', invoice.senderAddress.street)"
-            @blur="validate('senderAddress', invoice.senderAddress.street)"
+            @keyup="
+              validateEmptyField('senderAddress', invoice.senderAddress.street)
+            "
+            @blur="
+              validateEmptyField('senderAddress', invoice.senderAddress.street)
+            "
           />
         </div>
         <div class="grid grid-cols-3 gap-[10px]">
-          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div
+            class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+          >
             <div class="flex justify-between">
               <label class="text-xs" for="city"> City </label>
               <span class="text-[10px] text-red-500">{{
@@ -39,16 +48,23 @@
               }}</span>
             </div>
             <input
-              class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+              class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+              :class="[errors.senderCity ? 'invalidBorder' : 'validBorder']"
               type="text"
               name="city"
               id="city"
               v-model.trim="invoice.senderAddress.city"
-              @keyup="validate('senderCity', invoice.senderAddress.city)"
-              @blur="validate('senderCity', invoice.senderAddress.city)"
+              @keyup="
+                validateEmptyField('senderCity', invoice.senderAddress.city)
+              "
+              @blur="
+                validateEmptyField('senderCity', invoice.senderAddress.city)
+              "
             />
           </div>
-          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div
+            class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+          >
             <div class="flex justify-between">
               <label class="text-xs" for="postCode"> Post Code </label>
               <span class="text-[10px] text-red-500">{{
@@ -56,18 +72,29 @@
               }}</span>
             </div>
             <input
-              class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+              class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+              :class="[errors.senderPostCode ? 'invalidBorder' : 'validBorder']"
               type="text"
               name="postCode"
               id="postCode"
               v-model.trim="invoice.senderAddress.postCode"
               @keyup="
-                validate('senderPostCode', invoice.senderAddress.postCode)
+                validateEmptyField(
+                  'senderPostCode',
+                  invoice.senderAddress.postCode
+                )
               "
-              @blur="validate('senderPostCode', invoice.senderAddress.postCode)"
+              @blur="
+                validateEmptyField(
+                  'senderPostCode',
+                  invoice.senderAddress.postCode
+                )
+              "
             />
           </div>
-          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div
+            class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+          >
             <div class="flex justify-between">
               <label class="text-xs" for="country"> Country </label>
               <span class="text-[10px] text-red-500">{{
@@ -75,13 +102,24 @@
               }}</span>
             </div>
             <input
-              class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+              class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+              :class="[errors.senderCountry ? 'invalidBorder' : 'validBorder']"
               type="text"
               name="country"
               id="country"
               v-model.trim="invoice.senderAddress.country"
-              @keyup="validate('senderCountry', invoice.senderAddress.country)"
-              @blur="validate('senderCountry', invoice.senderAddress.country)"
+              @keyup="
+                validateEmptyField(
+                  'senderCountry',
+                  invoice.senderAddress.country
+                )
+              "
+              @blur="
+                validateEmptyField(
+                  'senderCountry',
+                  invoice.senderAddress.country
+                )
+              "
             />
           </div>
         </div>
@@ -89,7 +127,9 @@
       <!-- Bill To -->
       <div class="flex flex-col gap-[24px]">
         <h3 class="text-sm font-bold text-purple-base">Bill To</h3>
-        <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+        <div
+          class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+        >
           <div class="flex justify-between">
             <label class="text-xs" for="clientName"> Client's Name </label>
             <span class="text-[10px] text-red-500">{{
@@ -97,16 +137,19 @@
             }}</span>
           </div>
           <input
-            class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+            class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+            :class="[errors.clientName ? 'invalidBorder' : 'validBorder']"
             type="text"
             name="clientName"
             id="clientName"
             v-model.trim="invoice.clientName"
-            @keyup="validate('clientName', invoice.clientName)"
-            @blur="validate('clientName', invoice.clientName)"
+            @keyup="validateEmptyField('clientName', invoice.clientName)"
+            @blur="validateEmptyField('clientName', invoice.clientName)"
           />
         </div>
-        <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+        <div
+          class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+        >
           <div class="flex justify-between">
             <label class="text-xs" for="clientEmail"> Client's Email </label>
             <span class="text-[10px] text-red-500">{{
@@ -114,16 +157,19 @@
             }}</span>
           </div>
           <input
-            class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+            class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+            :class="[errors.clientEmail ? 'invalidBorder' : 'validBorder']"
             type="text"
             name="clientEmail"
             id="clientEmail"
             v-model.trim="invoice.clientEmail"
-            @keyup="validate('clientEmail', invoice.clientEmail)"
-            @blur="validate('clientEmail', invoice.clientEmail)"
+            @keyup="validateEmptyField('clientEmail', invoice.clientEmail)"
+            @blur="validateEmptyField('clientEmail', invoice.clientEmail)"
           />
         </div>
-        <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+        <div
+          class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+        >
           <div class="flex justify-between">
             <label class="text-xs" for="clientEmail"> Street Address </label>
             <span class="text-[10px] text-red-500">{{
@@ -131,17 +177,24 @@
             }}</span>
           </div>
           <input
-            class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+            class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+            :class="[errors.clientAddress ? 'invalidBorder' : 'validBorder']"
             type="text"
             name="clientAddress"
             id="clientAddress"
             v-model.trim="invoice.clientAddress.street"
-            @keyup="validate('clientAddress', invoice.clientAddress.street)"
-            @blur="validate('clientAddress', invoice.clientAddress.street)"
+            @keyup="
+              validateEmptyField('clientAddress', invoice.clientAddress.street)
+            "
+            @blur="
+              validateEmptyField('clientAddress', invoice.clientAddress.street)
+            "
           />
         </div>
         <div class="grid grid-cols-3 gap-[10px]">
-          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div
+            class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+          >
             <div class="flex justify-between">
               <label class="text-xs" for="clientCity"> City </label>
               <span class="text-[10px] text-red-500">{{
@@ -149,16 +202,23 @@
               }}</span>
             </div>
             <input
-              class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+              class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+              :class="[errors.clientCity ? 'invalidBorder' : 'validBorder']"
               type="text"
               name="clientCity"
               id="clientCity"
               v-model.trim="invoice.clientAddress.city"
-              @keyup="validate('clientCity', invoice.clientAddress.city)"
-              @blur="validate('clientCity', invoice.clientAddress.city)"
+              @keyup="
+                validateEmptyField('clientCity', invoice.clientAddress.city)
+              "
+              @blur="
+                validateEmptyField('clientCity', invoice.clientAddress.city)
+              "
             />
           </div>
-          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div
+            class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+          >
             <div class="flex justify-between">
               <label class="text-xs" for="clientPostCode"> Post Code </label>
               <span class="text-[10px] text-red-500">{{
@@ -166,18 +226,29 @@
               }}</span>
             </div>
             <input
-              class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+              class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+              :class="[errors.clientPostCode ? 'invalidBorder' : 'validBorder']"
               type="text"
               name="clientPostCode"
               id="clientPostCode"
               v-model.trim="invoice.clientAddress.postCode"
               @keyup="
-                validate('clientPostCode', invoice.clientAddress.postCode)
+                validateEmptyField(
+                  'clientPostCode',
+                  invoice.clientAddress.postCode
+                )
               "
-              @blur="validate('clientPostCode', invoice.clientAddress.postCode)"
+              @blur="
+                validateEmptyField(
+                  'clientPostCode',
+                  invoice.clientAddress.postCode
+                )
+              "
             />
           </div>
-          <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+          <div
+            class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+          >
             <div class="flex justify-between">
               <label class="text-xs" for="clientCountry"> Country </label>
 
@@ -186,13 +257,24 @@
               }}</span>
             </div>
             <input
-              class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+              class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+              :class="[errors.clientCountry ? 'invalidBorder' : 'validBorder']"
               type="text"
               name="clientCountry"
               id="clientCountry"
               v-model.trim="invoice.clientAddress.country"
-              @keyup="validate('clientCountry', invoice.clientAddress.country)"
-              @blur="validate('clientCountry', invoice.clientAddress.country)"
+              @keyup="
+                validateEmptyField(
+                  'clientCountry',
+                  invoice.clientAddress.country
+                )
+              "
+              @blur="
+                validateEmptyField(
+                  'clientCountry',
+                  invoice.clientAddress.country
+                )
+              "
             />
           </div>
         </div>
@@ -200,12 +282,12 @@
       <!-- invoice date -->
       <div class="grid grid-cols-2 gap-[10px]">
         <label
-          class="flex flex-col gap-[10px] text-xs text-moon-color"
+          class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
           for="invoiceDate"
         >
           Invoice Date
           <input
-            class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+            class="h-[48px] rounded-md border-[1px] border-moon-color px-4 dark:border-transparent dark:bg-[#252945]"
             type="date"
             name="invoiceDate"
             id="invoiceDate"
@@ -214,12 +296,12 @@
           />
         </label>
         <label
-          class="flex flex-col gap-[10px] text-xs text-moon-color"
+          class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
           for="PaymentTerms"
         >
           Payment Terms
           <select
-            class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+            class="h-[48px] rounded-md border-[1px] border-moon-color px-4 dark:border-transparent dark:bg-[#252945]"
             name="paymentTerms"
             id="paymentTerms"
             v-model.trim="invoice.paymentTerms"
@@ -241,30 +323,33 @@
             class="mb-[24px] grid w-full grid-cols-[200px_50px_90px_90px_30px] gap-[10px]"
             :key="i"
           >
-            <div class="flex flex-col gap-[10px] text-xs text-moon-color">
+            <div
+              class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+            >
               <div class="flex justify-between">
                 <label class="text-xs" for="itemName"> Item Name </label>
                 <span class="text-[10px] text-red-500">{{
-                  errors[`itemName${i}`]
+                  errors[`item${i}`]
                 }}</span>
               </div>
               <input
-                class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+                class="h-[48px] rounded-md px-4 dark:bg-[#252945]"
+                :class="[errors[`item${i}`] ? 'invalidBorder' : 'validBorder']"
                 type="text"
                 name="itemName"
                 id="itemName"
                 v-model.trim="invoice.items[i].name"
-                @keyup="validate(`itemName${i}`, invoice.items[i].name)"
-                @blur="validate(`itemName${i}`, invoice.items[i].name)"
+                @keyup="validateEmptyField(`item${i}`, invoice.items[i].name)"
+                @blur="validateEmptyField(`item${i}`, invoice.items[i].name)"
               />
             </div>
             <label
-              class="flex flex-col gap-[10px] text-xs text-moon-color"
+              class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
               for="ItemQty"
             >
               QTY.
               <input
-                class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+                class="h-[48px] rounded-md border-[1px] border-moon-color px-4 dark:border-transparent dark:bg-[#252945]"
                 autocomplete="of"
                 min="1"
                 inputmode="numeric"
@@ -275,12 +360,12 @@
               />
             </label>
             <label
-              class="flex flex-col gap-[10px] text-xs text-moon-color"
+              class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
               for="itemPrice"
             >
               Price
               <input
-                class="h-[48px] rounded-md border-[1px] border-moon-color px-4"
+                class="h-[48px] rounded-md border-[1px] border-moon-color px-4 dark:border-transparent dark:bg-[#252945]"
                 autocomplete="of"
                 min="1"
                 inputmode="numeric"
@@ -291,12 +376,12 @@
               />
             </label>
             <label
-              class="flex flex-col gap-[10px] text-xs text-moon-color"
+              class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
               for="itemTotal"
             >
               Total
               <div
-                class="grid h-[48px] place-content-center rounded-md border-[1px] border-moon-color px-4"
+                class="grid h-[48px] place-content-center rounded-md border-[1px] border-moon-color px-4 dark:border-transparent dark:bg-[#252945] dark:text-white"
                 type="number"
                 name="itemTotal"
                 id="itemTotal"
@@ -319,11 +404,19 @@
         <button
           type="button"
           aria-label="Add new item"
-          class="h-[48px] w-full rounded-full bg-[#DFE3FA] text-sm font-bold text-[#7E88C3]"
+          class="h-[48px] w-full rounded-full bg-[#DFE3FA] text-sm font-bold text-[#7E88C3] dark:bg-[#252945] dark:text-[#DFE3FA]"
           @click="addItem"
         >
           + Add New Item
         </button>
+      </div>
+      <div>
+        <p v-if="!validForm" class="text-xs text-red-500">
+          -All fields must be added!
+        </p>
+        <p v-if="!validItem" class="text-xs text-red-500">
+          -An item must be added!
+        </p>
       </div>
       <div>
         <div
@@ -338,7 +431,7 @@
           <TheButton
             name="Save Changes"
             btnClass="paid"
-            @click="handleForm(invoice)"
+            @click="handleEditForm(invoice)"
           />
         </div>
         <div v-else class="flex items-center justify-between">
@@ -346,7 +439,7 @@
             <TheButton
               name="Discard"
               btnClass="cancel"
-              @click="store.toggleForm()"
+              @click="discardInvoice()"
             />
           </div>
           <div class="flex items-center gap-6">
@@ -369,7 +462,12 @@ import { useInvoiceStore } from "../stores/invoice";
 import TheButton from "./TheButton.vue";
 import IconDelete from "./icons/IconDelete.vue";
 import { v4 as uuidv4 } from "uuid";
-import useFormValidation from "@/modules/useFormValidation.js";
+import useFormValidation, {
+  isValid,
+  validForm,
+  validItem,
+  resetErrors,
+} from "@/modules/useFormValidation.js";
 
 const store = useInvoiceStore();
 
@@ -399,76 +497,27 @@ const invoice = reactive({
   total: store.currentInvoice.total,
 });
 
-// form field validation
 const { validateEmptyField, errors } = useFormValidation();
-const validate = (fieldName, fieldValue) => {
-  return validateEmptyField(fieldName, fieldValue);
+
+const discardInvoice = () => {
+  store.toggleForm();
+  resetErrors();
 };
 
-let validForm = false;
 const addNewInvoice = (invoice) => {
-  validForm = true;
+  isValid(invoice);
 
-  for (const [key, value] of Object.entries(invoice)) {
-    if (value === "") {
-      validate(key, value);
-      validForm = false;
-    }
-    if (key === "description" || key === "paymentDue") {
-      validForm = true;
-    }
-  }
-
-  for (const [key, value] of Object.entries(invoice.senderAddress)) {
-    if (value === "") {
-      if (key === "street") {
-        validate("senderAddress", value);
-      }
-      if (key === "country") {
-        validate("senderCountry", value);
-      }
-      if (key === "city") {
-        validate("senderCity", value);
-      }
-      if (key === "postCode") {
-        validate("senderPostCode", value);
-      }
-      validForm = false;
-    }
-  }
-
-  for (const [key, value] of Object.entries(invoice.clientAddress)) {
-    if (value === "") {
-      if (key === "street") {
-        validate("clientAddress", value);
-      }
-      if (key === "country") {
-        validate("clientCountry", value);
-      }
-      if (key === "city") {
-        validate("clientCity", value);
-      }
-      if (key === "postCode") {
-        validate("clientPostCode", value);
-      }
-      validForm = false;
-    }
-  }
-
-  invoice.items.map((item, i) => {
-    if (item.name === "") {
-      validate(`itemName${i}`, item.name);
-      validForm = false;
-    }
-  });
-
-  if (validForm) {
+  if (validForm.value) {
     store.addNewInvoice(invoice);
   }
 };
 
-const handleForm = (invoice) => {
-  store.editInvoice(invoice);
+const handleEditForm = (invoice) => {
+  isValid(invoice);
+
+  if (validForm.value) {
+    store.editInvoice(invoice);
+  }
 };
 
 const multiple = (a, b, i) => {

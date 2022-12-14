@@ -38,6 +38,7 @@
               @click="store.toggleModal()"
             />
             <TheButton
+              v-if="store.currentInvoice.status !== 'paid'"
               name="Mark as Paid"
               btnClass="paid"
               @click="store.markAsPaid(store.currentInvoice.id)"

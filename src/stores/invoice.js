@@ -4,6 +4,9 @@ export const useInvoiceStore = defineStore("invoice", {
   state: () => ({
     invoices: [],
     filteredInvoices: [],
+    paidInvoices: [],
+    pendingInvoices: [],
+    draftInvoices: [],
     currentInvoice: {},
     editMode: false,
     formOpen: false,
@@ -82,6 +85,15 @@ export const useInvoiceStore = defineStore("invoice", {
     // set initial state
     setFilteredInvoices() {
       this.filteredInvoices = this.invoices;
+    },
+    setPaidInvoices(paid) {
+      this.paidInvoices = paid;
+    },
+    setPendingInvoices(pending) {
+      this.pendingInvoices = pending;
+    },
+    setDraftInvoices(draft) {
+      this.draftInvoices = draft;
     },
     async deleteInvoice(id) {
       this.filteredInvoices = this.filteredInvoices.filter(

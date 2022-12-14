@@ -1,6 +1,6 @@
 <template>
   <div
-    class="nav absolute left-0 flex h-screen flex-col justify-between overflow-hidden rounded-tr-3xl rounded-br-3xl bg-nav-base dark:bg-nav-dark"
+    class="nav absolute left-0 flex h-full flex-col justify-between overflow-hidden rounded-tr-3xl rounded-br-3xl bg-nav-base dark:bg-nav-dark"
   >
     <div
       class="box-1 flex h-[103px] w-[103px] items-center justify-center bg-purple-base"

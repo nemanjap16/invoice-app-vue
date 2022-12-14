@@ -93,10 +93,3 @@ export default function useFormValidation() {
   validateEmptyField();
   return { errors, validateEmptyField };
 }
-
-//  @keyup="
-//     validateEmptyField(item[i].name, invoice.items[i].name),
-//   "
-//   @blur="
-//     validateEmptyField(item[i].name, invoice.items[i].name),
-//   "

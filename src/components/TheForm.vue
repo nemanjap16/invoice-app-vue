@@ -426,7 +426,7 @@
           <TheButton
             name="Cancel"
             btnClass="cancel"
-            @click="store.toggleForm()"
+            @click="handleEditFormCancel()"
           />
           <TheButton
             name="Save Changes"
@@ -493,7 +493,7 @@ const invoice = reactive({
     postCode: store.currentInvoice.clientAddress.postCode,
     country: store.currentInvoice.clientAddress.country,
   },
-  items: store.currentInvoice.items,
+  items: [...store.currentInvoice.items],
   total: store.currentInvoice.total,
 });
 
@@ -520,6 +520,11 @@ const handleEditForm = (invoice) => {
   }
 };
 
+const handleEditFormCancel = () => {
+  store.toggleForm();
+  resetErrors();
+};
+
 const multiple = (a, b, i) => {
   let total = parseFloat(a * b).toFixed(2);
   invoice.items[i].total = Number(total);
@@ -532,7 +537,7 @@ const grandTotal = () => {
   invoice.items.forEach((el) => {
     sum += el.total;
   });
-  store.currentInvoice.total = sum;
+  // store.currentInvoice.total = sum;
   invoice.total = sum;
 };
 

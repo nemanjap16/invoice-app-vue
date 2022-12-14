@@ -10,8 +10,19 @@
           Invoices
         </h1>
         <!-- desktop -->
-        <p class="hidden text-muted-color dark:text-muted-color-dark md:block">
-          There are {{ store.filteredInvoices.length }} invoices
+        <p
+          class="hidden text-xs text-muted-color dark:text-muted-color-dark md:block"
+        >
+          There are {{ store.filteredInvoices.length }} invoices,
+          <span v-if="store.paidInvoices.length > 0"
+            >{{ store.paidInvoices.length }} paid,
+          </span>
+          <span v-if="store.pendingInvoices.length > 0"
+            >{{ store.pendingInvoices.length }} pending,
+          </span>
+          <span v-if="store.draftInvoices.length > 0"
+            >{{ store.draftInvoices.length }} draft.
+          </span>
         </p>
         <!-- mobile -->
         <p class="text-muted-color dark:text-muted-color-dark md:hidden">
@@ -83,7 +94,7 @@
           <p class="font-semibold text-title-color dark:text-white md:hidden">
             Filter
           </p>
-          <IconArrowDown ref="arrow" />
+          <IconArrowDown />
         </button>
         <button
           class="flex items-center gap-2 rounded-[60px] bg-purple-light p-2 text-white"
@@ -128,7 +139,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useInvoiceStore } from "../stores/invoice";
 import IconArrowDown from "./icons/IconArrowDown.vue";
 import IconEmpty from "./icons/IconEmpty.vue";
@@ -136,7 +146,6 @@ import IconPlus from "./icons/IconPlus.vue";
 import InvoiceData from "./InvoiceData.vue";
 
 let store = useInvoiceStore();
-const arrow = ref();
 
 const filter = (e) => {
   if (store.filterOpen) {
@@ -155,6 +164,42 @@ const handleCheckbox = () => {
     store.setFilter(checkedCheckboxes);
   } else {
     store.setFilteredInvoices();
+  }
+  paidInvoices(checkedCheckboxes);
+  pendingInvoices(checkedCheckboxes);
+  draftInvoices(checkedCheckboxes);
+};
+
+const paidInvoices = (checkedCheckboxes) => {
+  if (checkedCheckboxes.includes("paid")) {
+    let paid = store.filteredInvoices.filter(
+      (invoice) => invoice.status === "paid"
+    );
+    store.setPaidInvoices(paid);
+  } else {
+    store.setPaidInvoices(0);
+  }
+};
+
+const pendingInvoices = (checkedCheckboxes) => {
+  if (checkedCheckboxes.includes("pending")) {
+    let pending = store.filteredInvoices.filter(
+      (invoice) => invoice.status === "pending"
+    );
+    store.setPendingInvoices(pending);
+  } else {
+    store.setPendingInvoices(0);
+  }
+};
+
+const draftInvoices = (checkedCheckboxes) => {
+  if (checkedCheckboxes.includes("draft")) {
+    let draft = store.filteredInvoices.filter(
+      (invoice) => invoice.status === "draft"
+    );
+    store.setDraftInvoices(draft);
+  } else {
+    store.setDraftInvoices(0);
   }
 };
 </script>

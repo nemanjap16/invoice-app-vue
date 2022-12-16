@@ -292,11 +292,14 @@
     </div>
   </div>
   <TheModal v-if="store.modalOpen" :id="store.currentInvoice.id" />
-  <TheForm v-if="store.formOpen" />
+  <transition name="form">
+    <TheForm v-if="store.formOpen" />
+  </transition>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import { onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import ArrowLeft from "../components/icons/ArrowLeft.vue";
 import StatusBtn from "../components/StatusBtn.vue";
 import TheButton from "../components/TheButton.vue";
@@ -308,5 +311,14 @@ import { formatDate } from "../utilities/FormatDate";
 import { formatCurrency } from "../utilities/FormatNumber";
 
 let router = useRouter();
+let route = useRoute();
 const store = useInvoiceStore();
+
+onMounted(() => {
+  document.title = `Invoice Details | ${route.params.id}`;
+  // let invoice = store.filteredInvoices.find(
+  //   (inv) => inv.id === route.params.id
+  // );
+  // document.title = `Invoice Details | ${invoice.clientName}`;
+});
 </script>

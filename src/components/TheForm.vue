@@ -1,5 +1,8 @@
 <template>
-  <div v-if="store.formOpen" class="absolute inset-0 z-10 bg-[#0d0f1780]">
+  <div
+    v-if="store.formOpen"
+    class="absolute inset-0 right-[-800px] z-10 bg-[#0d0f1780]"
+  >
     <form
       class="flex h-full w-[730px] flex-col gap-[48px] overflow-y-scroll rounded-tr-2xl rounded-br-2xl bg-white p-[56px] pl-[159px] dark:bg-[#141625]"
       @submit.prevent
@@ -443,7 +446,11 @@
             />
           </div>
           <div class="flex items-center gap-6">
-            <TheButton name="Save as Draft" btnClass="draft" />
+            <TheButton
+              name="Save as Draft"
+              btnClass="draft"
+              @click="saveAsDraft(invoice)"
+            />
             <TheButton
               name="Save & Send"
               btnClass="paid"
@@ -512,6 +519,15 @@ const addNewInvoice = (invoice) => {
   }
 };
 
+const saveAsDraft = (invoice) => {
+  isValid(invoice);
+  invoice.status = "draft";
+
+  if (validForm.value) {
+    store.addNewInvoice(invoice);
+  }
+};
+
 const handleEditForm = (invoice) => {
   isValid(invoice);
 
@@ -558,5 +574,3 @@ const addItem = () => {
   });
 };
 </script>
-
-<style scoped></style>

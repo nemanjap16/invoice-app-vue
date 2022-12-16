@@ -1,7 +1,10 @@
 <template>
   <!-- desktop -->
   <router-link
-    :to="{ name: 'invoice', params: { id: invoice.id } }"
+    :to="{
+      name: 'invoice',
+      params: { id: invoice.id },
+    }"
     @click="store.getInvoice(invoice.id)"
   >
     <div class="hidden shadow-md lg:block">

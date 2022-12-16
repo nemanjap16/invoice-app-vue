@@ -15,6 +15,19 @@ const store = useInvoiceStore();
     <main>
       <TheInvoices />
     </main>
-    <TheForm v-if="store.formOpen" />
+    <transition name="form">
+      <TheForm v-if="store.formOpen" />
+    </transition>
   </div>
 </template>
+
+<style>
+.form-enter-active,
+.form-leave-active {
+  transition: all 0.8s ease-in-out;
+}
+.form-enter-from,
+.form-leave-to {
+  transform: translateX(-750px);
+}
+</style>

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button type="button" class="btn text-xs font-semibold" :class="btnClass">
+    <button
+      type="button"
+      class="btn text-[10px] font-semibold md:text-xs"
+      :class="btnClass"
+    >
       {{ name }}
     </button>
   </div>

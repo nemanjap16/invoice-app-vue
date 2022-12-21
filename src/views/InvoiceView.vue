@@ -286,9 +286,18 @@
     <div
       class="mt-[56px] flex h-[90px] items-center justify-center gap-3 bg-white dark:bg-nav-dark"
     >
-      <TheButton name="Edit" btnClass="edit" />
-      <TheButton name="Delete" btnClass="delete" />
-      <TheButton name="Mark as Paid" btnClass="paid" />
+      <TheButton
+        name="Edit"
+        btnClass="edit"
+        @click="store.toggleForm(), store.setEditModeTrue()"
+      />
+      <TheButton name="Delete" btnClass="delete" @click="store.toggleModal()" />
+      <TheButton
+        v-if="store.currentInvoice.status !== 'paid'"
+        name="Mark as Paid"
+        btnClass="paid"
+        @click="store.markAsPaid(store.currentInvoice.id)"
+      />
     </div>
   </div>
   <TheModal v-if="store.modalOpen" :id="store.currentInvoice.id" />

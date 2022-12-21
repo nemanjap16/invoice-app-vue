@@ -4,7 +4,7 @@
     class="absolute inset-0 right-[-800px] z-10 bg-[#0d0f1780]"
   >
     <form
-      class="flex h-full w-[730px] flex-col gap-[48px] overflow-y-scroll rounded-tr-2xl rounded-br-2xl bg-white p-[56px] pl-[159px] dark:bg-[#141625]"
+      class="flex h-full w-screen flex-col gap-[48px] overflow-y-scroll rounded-tr-2xl rounded-br-2xl bg-white p-[56px] pl-[56px] dark:bg-[#141625] md:w-[730px] md:pl-[159px]"
       @submit.prevent
     >
       <div class="dark:text-white">
@@ -40,7 +40,7 @@
             "
           />
         </div>
-        <div class="grid grid-cols-3 gap-[10px]">
+        <div class="grid grid-cols-2 gap-[10px] gap-y-5 md:grid-cols-3">
           <div
             class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
           >
@@ -96,7 +96,7 @@
             />
           </div>
           <div
-            class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+            class="col-span-2 flex flex-col gap-[10px] text-xs text-moon-color dark:text-white md:col-span-1"
           >
             <div class="flex justify-between">
               <label class="text-xs" for="country"> Country </label>
@@ -194,7 +194,7 @@
             "
           />
         </div>
-        <div class="grid grid-cols-3 gap-[10px]">
+        <div class="grid grid-cols-2 gap-[10px] gap-y-5 md:grid-cols-3">
           <div
             class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
           >
@@ -250,7 +250,7 @@
             />
           </div>
           <div
-            class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+            class="col-span-2 flex flex-col gap-[10px] text-xs text-moon-color dark:text-white md:col-span-1"
           >
             <div class="flex justify-between">
               <label class="text-xs" for="clientCountry"> Country </label>
@@ -283,7 +283,9 @@
         </div>
       </div>
       <!-- invoice date -->
-      <div class="grid grid-cols-2 gap-[10px]">
+      <div
+        class="grid grid-cols-1 grid-rows-2 gap-[30px] md:grid-cols-2 md:grid-rows-none md:gap-[10px]"
+      >
         <label
           class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
           for="invoiceDate"
@@ -323,11 +325,11 @@
         <div>
           <div
             v-for="(item, i) in invoice.items"
-            class="mb-[24px] grid w-full grid-cols-[200px_50px_90px_90px_30px] gap-[10px]"
+            class="mb-[24px] grid w-full grid-cols-4 gap-[10px] gap-y-5 md:grid-cols-[200px_50px_90px_90px_30px]"
             :key="i"
           >
             <div
-              class="flex flex-col gap-[10px] text-xs text-moon-color dark:text-white"
+              class="col-span-4 flex flex-col gap-[10px] text-xs text-moon-color dark:text-white md:col-span-1"
             >
               <div class="flex justify-between">
                 <label class="text-xs" for="itemName"> Item Name </label>
@@ -407,7 +409,7 @@
         <button
           type="button"
           aria-label="Add new item"
-          class="h-[48px] w-full rounded-full bg-[#DFE3FA] text-sm font-bold text-[#7E88C3] dark:bg-[#252945] dark:text-[#DFE3FA]"
+          class="mt-8 h-[48px] w-full rounded-full bg-[#DFE3FA] text-sm font-bold text-[#7E88C3] dark:bg-[#252945] dark:text-[#DFE3FA] md:mt-0"
           @click="addItem"
         >
           + Add New Item
@@ -424,7 +426,7 @@
       <div>
         <div
           v-if="store.editMode"
-          class="flex h-[100px] w-full justify-end gap-6"
+          class="absolute bottom-0 left-0 flex w-screen justify-center gap-6 bg-[#252945] py-2 shadow-xl md:relative md:h-[100px] md:w-full md:justify-end md:bg-transparent md:py-0 md:shadow-none"
         >
           <TheButton
             name="Cancel"
@@ -437,7 +439,10 @@
             @click="handleEditForm(invoice)"
           />
         </div>
-        <div v-else class="flex items-center justify-between">
+        <div
+          v-else
+          class="absolute bottom-0 left-0 flex w-screen items-center justify-center bg-[#252945] py-2 md:relative md:w-full md:justify-between md:bg-transparent"
+        >
           <div>
             <TheButton
               name="Discard"
@@ -445,7 +450,7 @@
               @click="discardInvoice()"
             />
           </div>
-          <div class="flex items-center gap-6">
+          <div class="flex items-center md:gap-6">
             <TheButton
               name="Save as Draft"
               btnClass="draft"

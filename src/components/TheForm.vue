@@ -310,11 +310,12 @@
             name="paymentTerms"
             id="paymentTerms"
             v-model.trim="invoice.paymentTerms"
+            @change="paymentDue"
           >
             <optgroup>
               <option value="1">Net 1 Day</option>
               <option value="7">Net 7 Days</option>
-              <option value="15">Net 15 Days</option>
+              <option value="14">Net 15 Days</option>
               <option value="30">Net 30 Days</option>
             </optgroup>
           </select>
@@ -544,6 +545,15 @@ const handleEditForm = (invoice) => {
 const handleEditFormCancel = () => {
   store.toggleForm();
   resetErrors();
+};
+
+const paymentDue = () => {
+  let created = new Date();
+  let due = created.setDate(
+    created.getDate(invoice.createdAt) + parseInt(invoice.paymentTerms)
+  );
+  let dueDate = new Date(due).toISOString().split("T")[0];
+  invoice.paymentDue = dueDate;
 };
 
 const multiple = (a, b, i) => {

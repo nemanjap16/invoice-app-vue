@@ -228,6 +228,37 @@
         }
       ],
       "total": 3102.04
+    },
+    {
+      "id": "6a436871-da3f-4494-be96-12792d88d02a",
+      "createdAt": "2022-12-22",
+      "paymentDue": "2022-12-29",
+      "description": "",
+      "paymentTerms": "7",
+      "clientName": "Janik Torp",
+      "clientEmail": "janik@gmail.com",
+      "status": "pending",
+      "senderAddress": {
+        "street": "19 Union Terrace",
+        "city": "London",
+        "postCode": "E1 3EZ",
+        "country": "United Kingdom"
+      },
+      "clientAddress": {
+        "street": "Pandora 1233",
+        "city": "Pandora",
+        "postCode": "12-124",
+        "country": "Pandora"
+      },
+      "items": [
+        {
+          "name": "Email Design",
+          "quantity": 1,
+          "price": 1,
+          "total": 1
+        }
+      ],
+      "total": 1
     }
   ]
 }

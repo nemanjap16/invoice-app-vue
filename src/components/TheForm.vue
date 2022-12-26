@@ -1,10 +1,10 @@
 <template>
   <div
     v-if="store.formOpen"
-    class="absolute inset-0 right-[-800px] z-10 bg-[#0d0f1780]"
+    class="absolute inset-0 z-10 bg-[#0d0f1780] md:right-[-800px]"
   >
     <form
-      class="flex h-full w-screen flex-col gap-[48px] overflow-y-scroll rounded-tr-2xl rounded-br-2xl bg-white p-[56px] pl-[56px] dark:bg-[#141625] md:w-[730px] md:pl-[159px]"
+      class="flex h-full w-screen flex-col gap-[48px] overflow-y-scroll rounded-tr-2xl rounded-br-2xl bg-white p-[26px] pl-[26px] dark:bg-[#141625] md:w-[730px] md:p-[56px] md:pl-[159px]"
       @submit.prevent
     >
       <div class="dark:text-white">
@@ -522,6 +522,7 @@ const addNewInvoice = (invoice) => {
 
   if (validForm.value) {
     store.addNewInvoice(invoice);
+    store.toggleForm();
   }
 };
 
@@ -531,6 +532,7 @@ const saveAsDraft = (invoice) => {
 
   if (validForm.value) {
     store.addNewInvoice(invoice);
+    store.toggleForm();
   }
 };
 
@@ -539,6 +541,7 @@ const handleEditForm = (invoice) => {
 
   if (validForm.value) {
     store.editInvoice(invoice);
+    store.toggleForm();
   }
 };
 

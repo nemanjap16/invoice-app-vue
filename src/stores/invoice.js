@@ -127,9 +127,10 @@ export const useInvoiceStore = defineStore("invoice", {
       }
     },
     async editInvoice(invoice) {
-      this.invoices[this.invoices.findIndex((inv) => inv.id === invoice.id)] =
-        invoice;
-      this.currentInvoice = invoice;
+      this.filteredInvoices[
+        this.filteredInvoices.findIndex((inv) => inv.id === invoice.id)
+      ] = invoice;
+
       try {
         const res = await fetch(
           `http://localhost:3000/invoices/${invoice.id}`,

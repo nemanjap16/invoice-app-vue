@@ -474,6 +474,7 @@ import { reactive } from "vue";
 import { useInvoiceStore } from "../stores/invoice";
 import TheButton from "./TheButton.vue";
 import IconDelete from "./icons/IconDelete.vue";
+import { useRouter } from "vue-router";
 import { v4 as uuidv4 } from "uuid";
 import useFormValidation, {
   isValid,
@@ -483,6 +484,7 @@ import useFormValidation, {
 } from "@/modules/useFormValidation.js";
 
 const store = useInvoiceStore();
+const router = useRouter();
 
 const invoice = reactive({
   id: store.currentInvoice.id || uuidv4(),
@@ -542,12 +544,14 @@ const handleEditForm = (invoice) => {
   if (validForm.value) {
     store.editInvoice(invoice);
     store.toggleForm();
+    router.back();
   }
 };
 
 const handleEditFormCancel = () => {
   store.toggleForm();
   resetErrors();
+  router.back();
 };
 
 const paymentDue = () => {
@@ -571,8 +575,8 @@ const grandTotal = () => {
   invoice.items.forEach((el) => {
     sum += el.total;
   });
-  // store.currentInvoice.total = sum;
   invoice.total = sum;
+  store.currentInvoice.total = sum;
 };
 
 const parse = (num) => {

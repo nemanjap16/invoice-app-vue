@@ -298,6 +298,7 @@
             id="invoiceDate"
             placeholder="dd/mm/yyyy"
             v-model="invoice.createdAt"
+            :disabled="!store.editMode"
           />
         </label>
         <label
@@ -482,9 +483,11 @@ import useFormValidation, {
   validItem,
   resetErrors,
 } from "@/modules/useFormValidation.js";
+import { DateTime } from "luxon";
 
 const store = useInvoiceStore();
 const router = useRouter();
+const dt = DateTime;
 
 const invoice = reactive({
   id: store.currentInvoice.id || uuidv4(),
@@ -555,12 +558,16 @@ const handleEditFormCancel = () => {
 };
 
 const paymentDue = () => {
-  let created = new Date();
-  let due = created.setDate(
-    created.getDate(invoice.createdAt) + parseInt(invoice.paymentTerms)
-  );
-  let dueDate = new Date(due).toISOString().split("T")[0];
-  invoice.paymentDue = dueDate;
+  if (store.editMode) {
+    let due = dt
+      .fromISO(invoice.createdAt)
+      .plus({ days: parseInt(invoice.paymentTerms) })
+      .toISODate();
+    invoice.paymentDue = due;
+  } else {
+    let due = dt.now().plus({ days: invoice.paymentTerms }).toISODate();
+    invoice.paymentDue = due;
+  }
 };
 
 const multiple = (a, b, i) => {

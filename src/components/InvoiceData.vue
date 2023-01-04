@@ -47,7 +47,9 @@
         <div class="flex justify-between">
           <div class="flex">
             <span class="text-moon-color">#</span>
-            <p class="text-sm font-bold text-title-color dark:text-white">
+            <p
+              class="max-w-[120px] truncate text-sm font-bold text-title-color dark:text-white"
+            >
               {{ invoice.id }}
             </p>
           </div>

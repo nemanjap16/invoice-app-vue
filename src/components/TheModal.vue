@@ -1,7 +1,9 @@
 <template>
-  <div class="absolute inset-0 z-20 grid place-content-center bg-[#0d0f1780]">
+  <div
+    class="absolute inset-0 z-20 grid place-content-center bg-[#0d0f1780] p-8"
+  >
     <div
-      class="flex w-[480px] flex-col gap-4 rounded-lg bg-white p-6 dark:bg-title-color"
+      class="flex max-w-[480px] flex-col gap-4 rounded-lg bg-white p-6 dark:bg-title-color"
     >
       <h1 class="text-xl font-bold text-title-color dark:text-white">
         Confirm Deletion

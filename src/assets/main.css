@@ -91,3 +91,19 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+::-webkit-calendar-picker-indicator {
+  background-image: url("./icons/icon-calendar.svg");
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("./icons/icon-arrow-down.svg");
+  background-repeat: no-repeat;
+  background-position-x: 95%;
+  background-position-y: 20px;
+  border-radius: 2px;
+  padding-right: 2rem;
+}
